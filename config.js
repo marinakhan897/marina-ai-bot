@@ -1,7 +1,7 @@
 // config.js - Marina AI Bot Configuration
 module.exports = {
     // Facebook Login Credentials
-    email: "Jodiye5028@cspaus.com",
+    email: "husnain.tonali.bhaiee@gmail.com",
     password: "pathani123",
     
     // AI API Configuration - CORRECT GEMINI SETTINGS
