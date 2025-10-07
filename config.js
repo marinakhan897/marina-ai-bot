@@ -5,8 +5,8 @@ module.exports = {
     password: "pathani123",
     
     // AI API Configuration - CORRECT GEMINI SETTINGS
-    AI_API_KEY: "AIzaSyDW40hIZu_d9Y2YTssKdmfoD2S_ELzM3Qg",
-    AI_PROVIDER: "gemini",
+    AI_API_KEY: "sk-bddc91be67f34f42bc1e69c6010ac8ae",
+    AI_PROVIDER: "DeepSeek",
     
     // Bot Settings
     BOT_NAME: "Marina AI",
