@@ -1,0 +1,79 @@
+name: Marina AI Bot CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 0 * * *'  # Daily at midnight
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run basic tests
+      run: |
+        node -e "console.log('✅ Node.js working')"
+        node -e "const config = require('./config.js'); console.log('✅ Config loaded:', config.getBotInfo())"
+        node -e "const ai = require('./ai-engine.js'); console.log('✅ AI Engine initialized')"
+        node -e "const handler = require('./command-handler.js'); console.log('✅ Command handler ready')"
+
+    - name: Test AI responses
+      run: node test-ai.js
+
+    - name: Security audit
+      run: npm audit --audit-level moderate
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Create deployment package
+      run: |
+        mkdir -p deployment
+        cp -r *.js commands config.js package.json deployment/
+        cd deployment && tar -czf ../marina-ai-bot.tar.gz .
+
+    - name: Upload deployment artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: marina-ai-bot
+        path: marina-ai-bot.tar.gz
+        retention-days: 30
+
+    - name: Notify success
+      run: |
+        echo "🚀 Marina AI Bot deployed successfully!"
+        echo "📦 Version: $(node -e \"console.log(require('./config.js').getBotInfo().version)\")"
+        echo "👩‍💻 Created by: Marina Khan"
