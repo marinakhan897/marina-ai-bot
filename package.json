@@ -1,0 +1,29 @@
+{
+  "name": "marina-ai-bot",
+  "version": "2.0.0",
+  "description": "Facebook Messenger AI Bot by Marina Khan with Gemini AI",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js",
+    "dev": "node bot.js",
+    "test": "node -e \"console.log('Marina AI Bot Test')\""
+  },
+  "dependencies": {
+    "@xaviabot/fca-unofficial": "^1.4.0",
+    "axios": "^1.12.2",
+    "express": "^5.1.0",
+    "facebook-chat-api": "^1.8.0",
+    "fs": "0.0.1-security",
+    "path": "^0.12.7"
+  },
+  "keywords": [
+    "ai",
+    "bot",
+    "facebook",
+    "messenger",
+    "gemini",
+    "marina"
+  ],
+  "author": "Marina Khan",
+  "license": "MIT"
+}
